@@ -51,11 +51,12 @@
 
           <form @submit.prevent="validate" class="mt-20">
             <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-md">
-                <h1 class="font-medium text-2xl py-8 text-center">Change Your Information</h1>
-                <p v-if="errors" class="text-red-500">
+                <h1 class="font-medium text-2xl mt-8 mb-2 text-center">Change Your Information</h1>
+                <p class="text-sm mb-4 text-center text-gray-500">*Any data that doesn't insert will use your old data.</p>
+                <p v-if="errors" class="text-red-500 px-4">
                     <b>Please correct the following error(s):</b>
-                    <ul>
-                       <li v-for="error in errors" class="text-red-500">{{ error }}</li> 
+                    <ul class="mb-4">
+                       <li v-for="error in errors" class="text-red-500 px-4">{{ error }}</li> 
                     </ul>
                 </p>
                 <div class="grid justify-items-center">
