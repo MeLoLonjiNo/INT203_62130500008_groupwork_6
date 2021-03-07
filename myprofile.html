@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basic Vue Js - HelloWorld App</title>
+
+  <!-- https://tailwindcss.com/docs/installation -->
+  <!-- Using Tailwind via CDN -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- https://v3.vuejs.org/guide/installation.html#release-notes -->
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+</head>
+
+<body>
+  <div id="app"> 
+    <div class="py-12 bg-gray-300">
+
+      <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-md">
+          <div class="md:flex">
+              <div class="w-full p-2 py-10">
+                  <div class="flex justify-center">
+                      <div class="relative"> <img v-bind:src="profilepic" class="rounded-full" width="80"> 
+                        <span class="absolute border-white border-4 h-5 w-5 top-12 left-16 bg-green-700 rounded-full"></span> 
+                      </div>
+                  </div>
+                  <div class="flex flex-col text-center mt-3 mb-4"> 
+                    <span class="text-2xl font-medium">{{profileData.firstname}} {{profileData.lastname}}</span> 
+                    <span class="text-md text-gray-400">{{profileData.igtag}}</span> 
+                  </div>
+                  <div class="px-16 text-center text-md text-gray-800">
+                  <p>{{profileData.description}}</p>
+                  <p>Gender: {{profileData.gender}}</p>
+                  <p>Phone Number: {{profileData.phone}}</p>
+                  <p>Email: {{profileData.email}}</p>
+                </div>
+                  <div class="px-16 mt-3 text-center"> 
+                    <span v-for="tag in tags" class="bg-gray-100 h-5 p-1 px-3 rounded cursor-pointer hover:shadow hover:bg-gray-200">{{ tag.tag }}</span>
+                  </div>
+                  <div class="px-14 mt-5"> 
+                    <button class="h-12 bg-gray-200 w-full text-black text-md rounded hover:shadow hover:bg-gray-300 mb-2" >{{button1}}</button> 
+                    <button class="h-12 bg-blue-700 w-full text-white text-md rounded hover:shadow hover:bg-blue-800">{{button2}}</button> 
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <form @submit.prevent="validate" class="mt-20">
+            <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-md">
+                <h1 class="font-medium text-2xl py-8 text-center">Change Your Information</h1>
+                <p v-if="errors" class="text-red-500">
+                    <b>Please correct the following error(s):</b>
+                    <ul>
+                       <li v-for="error in errors" class="text-red-500">{{ error }}</li> 
+                    </ul>
+                </p>
+                <div class="grid justify-items-center">
+                    <div class=" space-x-6">
+                        <label for="igtag" class="text-md text-gray-800">Tag Name</label>
+                        <input type="text" id="igtag" v-model="newProfileData.igtag" name="igtag" class="bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class=" space-x-6">
+                        <label for="firstname" class="text-md text-gray-800">First Name</label>
+                        <input type="text" id="firstname" v-model="newProfileData.firstname" name="firstname" class="bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class="space-x-6">
+                        <label for="lastname" class="text-md text-gray-800">Last Name</label>
+                        <input type="text" id="lastname" v-model="newProfileData.lastname" name="lastname" class="bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class="space-x-16">
+                        <label for="age" class="text-md text-gray-800">Age</label>
+                        <input type="text" id="age" v-model="newProfileData.age" name="age" class="bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class="">
+                        <label class="text-md text-gray-800 mr-4">Gender</label>
+                            <input type="radio" id="Male" v-model="newProfileData.gender" name="gender" value="Male" class="bg-gray-100 rounded px-4 py-2 mb-4 mr-1">
+                            <label class="mr-2" for="Male">Male</label>
+                            <input type="radio" id="Female" v-model="newProfileData.gender" name="gender" value="Female" class="bg-gray-100 rounded px-4 py-2 mb-4 mr-1">
+                            <label class="mr-2" for="Female">Female</label>
+                            <input type="radio" id="Notspecify" v-model="newProfileData.gender" name="gender" value="Not Specify" class="bg-gray-100 rounded px-4 py-2 mb-4 mr-1">
+                            <label for="Notspecify">Not Specify</label>
+                    </div>
+                    <div class="space-x-4">
+                        <label for="email" class="text-md text-gray-800 pl-2">Email</label>
+                        <input type="text" id="email" v-model="newProfileData.email" name="email" class=" w-64 bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class="space-x-2">
+                        <label for="phone"class="text-md text-gray-800">Phone Number</label>
+                        <input type="text" id="phone" v-model="newProfileData.phone" name="phone" class="bg-gray-100 rounded px-4 py-2 mb-4">
+                    </div>
+                    <div class=" space-x-2">
+                      <label for="description" class="text-md text-gray-800 ml-2">Description</label>
+                      <br/>
+                      <textarea type="textarea" id="description" v-model="newProfileData.description" name="description" class="bg-gray-100 rounded px-4 py-2 w-80 h-24 mt-2"></textarea>
+                    </div>
+                    <div class="mt-8 mb-6">
+                        <input type="submit" value="Submit" class="px-8 py-2 text-white bg-green-500 rounded cursor-pointer hover:bg-green-600 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 mr-4">
+                        <input type="reset" class="px-8 py-2 text-white bg-red-400 rounded hover:bg-red-500 cursor-pointer focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2">
+                    </div>
+                    
+                </div>
+            </div>                            
+          </form>
+
+      </div>
+  </div>
+
+  <!-- my main.js -->
+  <script src="./profile.js"></script>
+</body>
+
+</html>
